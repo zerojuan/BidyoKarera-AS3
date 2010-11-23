@@ -5,6 +5,7 @@ package
 	import events.FacebookAPIEvent;
 	
 	import flash.events.Event;
+	import flash.profiler.showRedrawRegions;
 	
 	import org.flixel.FlxButton;
 	import org.flixel.FlxG;
@@ -50,6 +51,8 @@ package
 		
 		private var _spectatorGroup:FlxGroup;
 		
+		private var _dialogScreen:DialogScreen;
+		
 		public function MenuState(){			
 			//KareraFacebook.FACEBOOK = new FacebookAPI();
 			
@@ -71,7 +74,7 @@ package
 			add(_foregroundSprite);
 			
 			_startButton = new FlxButton(30,50, onStartButton);
-			add(_startButton);
+			//add(_startButton);
 			
 			_sendStatusButton = new FlxButton(300,115, onSendStatus);
 			var sendStatSpr:FlxSprite = new FlxSprite(0,0, SoonImg);
@@ -101,8 +104,19 @@ package
 			var spectator:Spectator = new Spectator(210, 150);
 			spectator.type = "woman";
 			
+			var spectator1:Spectator = new Spectator(280, 150);
+			spectator1.type = "man";
+			
+			var spectator2:Spectator = new Spectator(100, 150);
+			spectator2.type = "child";
+			
+			var spectator3:Spectator = new Spectator(160, 150);
+			spectator3.type = "punk";
 			
 			_spectatorGroup.add(spectator);
+			_spectatorGroup.add(spectator1);
+			_spectatorGroup.add(spectator2);
+			_spectatorGroup.add(spectator3);
 			add(_spectatorGroup);
 			
 			_mouthSprite = new FlxSprite(295, 150, TalkinImg);
@@ -111,8 +125,12 @@ package
 			_mouthSprite.play("talking");
 			//add(_mouthSprite);
 			
+			_dialogScreen = new DialogScreen();
+			_dialogScreen.showDialog("punk", "Whatup");
+			add(_dialogScreen);
+			
 			_welcomeTxt = new FlxText(300,220, 900, "Ooops. You caught us at a bad time. We are still busy breeding do.. err.. horses. Yes. Come back again on Oct 13th. Meanwhile click the poster to find out who viewed your profile..");
-			add(_welcomeTxt);
+			//add(_welcomeTxt);
 			_welcomeTxt.velocity.x = -65;
 			//Get server connection
 			//KareraFacebook.FACEBOOK.addEventListener(FacebookAPIEvent.USER_READY, onUserReady);
@@ -145,8 +163,12 @@ package
 		
 		override public function update():void{
 			super.update();
-			if(!_welcomeTxt.onScreen()){
-				_welcomeTxt.x = 300;
+			if(FlxG.keys.justPressed("X")){
+				if(_dialogScreen.visible){
+					_dialogScreen.hideDialog();
+				}else{
+					_dialogScreen.showDialog("woman", "Holla atcha boy!");
+				}
 			}
 		}
 		

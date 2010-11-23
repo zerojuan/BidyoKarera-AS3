@@ -19,7 +19,8 @@ package
 			addAnimation("childIdle", [6,7,8], 2);
 			addAnimation("punkIdle", [10,11], 5);
 			
-			velocity.y = -16;
+			//velocity.y = -16;
+			
 		}
 		
 		public function set type(str:String):void{
